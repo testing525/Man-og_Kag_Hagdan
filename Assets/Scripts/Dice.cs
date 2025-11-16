@@ -16,7 +16,7 @@ public class Dice : MonoBehaviour
     public Sprite[] diceFaces; // Assign sprites 1–6 in Inspector
 
     [Header("Animation Settings")]
-    public float rollDuration = 1.5f;
+    public float rollDuration = .7f;
     public float minInterval = 0.05f;
     public float maxInterval = 0.25f;
 
@@ -42,17 +42,23 @@ public class Dice : MonoBehaviour
     {
         if (isRolling || eventScript == null) return;
 
-        // 👇 Prevent rolling if shop is open or not normal
+        // no rolling if shop is open or not normal
         if (eventScript.currentState != State.Normal)
         {
-            Debug.Log("⚠️ Cannot roll while shop is open or game is paused!");
+            Debug.Log("Cannot roll while shop is open!");
             return;
         }
 
         StartCoroutine(RollDiceAnimation());
     }
 
-    IEnumerator RollDiceAnimation()
+    public void RollForBot(System.Action<int> onRolled)
+    {
+        if (isRolling) return;
+        StartCoroutine(RollDiceAnimation(onRolled));
+    }
+
+    private IEnumerator RollDiceAnimation(System.Action<int> onRolled = null)
     {
         isRolling = true;
         float elapsed = 0f;
@@ -74,6 +80,13 @@ public class Dice : MonoBehaviour
 
         isRolling = false;
         Debug.Log($"🎲 Dice rolled: {lastRoll}");
+
+        // Invoke callback if provided (for bot)
+        onRolled?.Invoke(lastRoll);
+
+        // Trigger normal event for any listeners
         OnDiceRolled?.Invoke(lastRoll);
     }
+
+
 }

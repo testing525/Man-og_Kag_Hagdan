@@ -13,12 +13,16 @@ public class ShopManager : MonoBehaviour
     public TMP_Text costText;
     public Button buyButton;
 
+    public ScoreManager scoreManager;
+    public PlayerProfile[] players; // Same array passed to ScoreManager
+
+
     [Header("UI")]
     public TMP_Text timerText;             // Timer UI (assign in Inspector)
     public TMP_Text playerTurnText;        // Player turn UI (assign in Inspector)
 
     [Header("Settings")]
-    public float shopTimePerPlayer = 10f;  // Duration each player can shop
+    public float shopTimePerPlayer = 5;  // Duration each player can shop
     public int totalPlayers = 4;           // Change dynamically later
 
     [Header("Item Data")]
@@ -29,6 +33,8 @@ public class ShopManager : MonoBehaviour
     private Coroutine shopRoutine;
     private EventScript eventScript;       // to set state back to Normal later
 
+
+
     void Start()
     {
         // Find event script in scene (optional)
@@ -38,6 +44,12 @@ public class ShopManager : MonoBehaviour
         gameObject.SetActive(false);
     }
 
+    public void InitializeShop(PlayerProfile[] playerProfiles)
+    {
+        players = playerProfiles;
+    }
+
+
     // ────────────────────────────────
     // Called by EventScript
     // ────────────────────────────────
@@ -45,29 +57,30 @@ public class ShopManager : MonoBehaviour
     {
         DisplayRandomItems();
         gameObject.SetActive(true);
-        Debug.Log("🛍️ Shop phase started!");
 
         if (eventScript != null)
             eventScript.currentState = State.Shopping;
 
-        currentPlayer = 1;
+        currentPlayer = 0; // FIXED
         shopRoutine = StartCoroutine(HandlePlayerTurns());
     }
+
 
     // ────────────────────────────────
     // Handles each player's shop turn
     // ────────────────────────────────
     private IEnumerator HandlePlayerTurns()
     {
-        while (currentPlayer <= totalPlayers)
+        while (currentPlayer < totalPlayers)
         {
-            playerTurnText.text = $"Player{currentPlayer} Turn";
+            playerTurnText.text = $"Player {currentPlayer + 1} Turn";
             yield return StartCoroutine(RunShopTimer());
             currentPlayer++;
         }
 
         EndShopPhase();
     }
+
 
     // ────────────────────────────────
     // Countdown timer for each turn
@@ -157,10 +170,46 @@ public class ShopManager : MonoBehaviour
 
     void BuySelectedItem()
     {
+
         if (selectedItem == null) return;
-        Debug.Log($"🛒 Player {currentPlayer} bought: {selectedItem.itemName} for {selectedItem.cost} points");
-        // TODO: Deduct points, add item to inventory
+
+        PlayerProfile profile = players[currentPlayer];
+
+        if (profile.points < selectedItem.cost)
+        {
+            Debug.Log($"❌ Player {currentPlayer + 1} does not have enough points!");
+            return;
+        }
+
+        // Deduct points
+        bool added = profile.AddItem(selectedItem.itemName);
+
+        if (!added)
+        {
+            Debug.Log($"❌ Player {currentPlayer + 1} inventory full!");
+            return;
+        }
+
+
+        profile.points -= selectedItem.cost;
+
+        Debug.Log($"🛒 Player {currentPlayer + 1} bought: {selectedItem.itemName}");
+
+        LearningManager.Instance.RecordItemBought(selectedItem.itemName, eventScript.roundCount);
+
+
+        // Update the UI
+        scoreManager.UpdateScoreUI();
+
+        // Optional: immediately end their turn after buying
+        // currentPlayer++;
     }
+
+    public ItemData GetItemData(string itemName)
+    {
+        return allItems.Find(item => item.itemName == itemName);
+    }
+
 }
 
 // ────────────────────────────────
