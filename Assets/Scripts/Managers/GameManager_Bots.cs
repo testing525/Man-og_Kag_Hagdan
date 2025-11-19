@@ -15,6 +15,8 @@ public class GameManager_Bots : MonoBehaviour
     public PlayerState playerState;
     public StunSelectionUI stunSelectionUI;
     public BombPlacement bombPlacement;
+    public LeaderboardUploader uploader;
+    public float gameStartTime;
 
     [Header("Players")]
     public GameObject[] players;
@@ -44,6 +46,7 @@ public class GameManager_Bots : MonoBehaviour
         for (int i = 0; i < players.Length; i++)
         {
             PlacePlayerAtStart(i);
+            gameStartTime = Time.time;
 
             // Assign PlayerProfile to PlayerMarker
             PlayerMarker marker = players[i].GetComponent<PlayerMarker>();
@@ -84,6 +87,15 @@ public class GameManager_Bots : MonoBehaviour
         if (diceUI != null)
             diceUI.OnDiceRolled -= HandleDiceResult;
     }
+
+    public void OnGameEnd(PlayerProfile player)
+    {
+        float playtime = Time.time - gameStartTime;
+        string playerName = player.playerName;
+
+        StartCoroutine(uploader.UploadTime(playerName, playtime));
+    }
+
 
     private void HandleDiceResult(int rollValue)
     {
@@ -147,6 +159,7 @@ public class GameManager_Bots : MonoBehaviour
             if (playerProfiles[playerIndex].crowns >= 2)
             {
                 Debug.Log($"🏆 {playerProfiles[playerIndex].playerName} WINS THE GAME!");
+                OnGameEnd(playerProfiles[playerIndex]);
                 yield break; // STOP ALL MOVEMENT / TURNS
             }
 

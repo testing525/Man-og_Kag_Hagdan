@@ -68,7 +68,7 @@ public class BotDecisionSystem : MonoBehaviour
             }
         }
 
-        // 5️⃣ Fallback: use hardcoded logic if Python failed
+        // Fallback: use hardcoded logic if Python failed
         if (string.IsNullOrEmpty(recommendedItem))
         {
             recommendedItem = DecideItemToBuy(bot, ShopManager.Instance.displayedItems);
@@ -82,23 +82,23 @@ public class BotDecisionSystem : MonoBehaviour
 
     public string DecideItemToBuy(PlayerProfile bot, List<ItemData> availableItems)
     {
-        // 1. If bot has > 3 items, skip buying
+        // 1. ff bot has > 3 items, skip buying
         if (bot.ownedItems.Count >= 3)
             return null;
 
-        // 2. Prioritize survival if near dangers
+        // 2. prioritize survival if near dangers
         if (IsNearSnake(bot) && ContainsItem(availableItems, "Anti Snake Spray"))
             return "Anti Snake Spray";
 
-        // 3. Bot prefers Pogo Stick (movement advantage)
+        // 3. bot prefers Pogo Stick (movement advantage)
         if (ContainsItem(availableItems, "Pogo Stick"))
             return "Pogo Stick";
 
-        // 4. Bot buys Bomb if someone is ahead
+        // 4. bot buys Bomb if someone is ahead
         if (IsPlayerAhead(bot) && ContainsItem(availableItems, "Bomb"))
             return "Bomb";
 
-        // 5. Buy Shield if no shield owned
+        // 5. buy Shield if no shield owned
         if (!bot.ownedItems.Contains("Shield") && ContainsItem(availableItems, "Shield"))
             return "Shield";
 
@@ -120,7 +120,7 @@ public class BotDecisionSystem : MonoBehaviour
         // small delay for realism
         yield return new WaitForSeconds(0.5f);
 
-        // 1️⃣ Write bot state for Python
+        // write bot state for Python
         BotStateWriter writer = FindAnyObjectByType<BotStateWriter>();
         if (writer != null)
         {
@@ -133,11 +133,11 @@ public class BotDecisionSystem : MonoBehaviour
             yield break;
         }
 
-        // Delete previous result if exists
+        // delete previous result if exists
         if (File.Exists(writer.ResultPath))
             File.Delete(writer.ResultPath);
 
-        // 2️⃣ Run Python asynchronously
+        // run Python asynchronously
         _ = PythonRunner.RunPythonAsync("brain_itemUse.py");
 
         // 3️⃣ Wait for Python to create result.json
@@ -151,7 +151,7 @@ public class BotDecisionSystem : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
         }
 
-        // 4️⃣ Read Python result
+        // read Python result
         if (File.Exists(writer.ResultPath))
         {
             try
@@ -168,19 +168,19 @@ public class BotDecisionSystem : MonoBehaviour
             }
         }
 
-        // 5️⃣ Fallback: use hardcoded logic if Python failed
+        // use hardcoded logic if Python failed
         if (string.IsNullOrEmpty(recommendedItem))
         {
-            // PRIORITY 1: Danger avoidance
+            // Danger avoidance
             if (IsNearSnake(bot) && bot.ownedItems.Contains("Anti Snake Spray"))
                 recommendedItem = "Anti Snake Spray";
-            // PRIORITY 2: Shield
+            // Shield
             else if (bot.ownedItems.Contains("Shield") && IsLikelyToGetAttacked(bot))
                 recommendedItem = "Shield";
-            // PRIORITY 3: Bomb
+            // Bomb
             else if (bot.ownedItems.Contains("Bomb") && IsPlayerAhead(bot))
                 recommendedItem = "Bomb";
-            // PRIORITY 4: Pogo Stick
+            // Pogo Stick
             else if (bot.ownedItems.Contains("Pogo Stick"))
                 recommendedItem = "Pogo Stick";
         }
@@ -195,11 +195,11 @@ public class BotDecisionSystem : MonoBehaviour
 
         foreach (var p in GameManager_Bots.instance.playerProfiles)
         {
-            if (p == bot) continue;            // can't stun self
+            if (p == bot) continue;            // cant stun self
             if (GameManager_Bots.instance.playerStates.GetState(p) == PlayerState.Stunned) continue; // skip already stunned
             if (p.ownedItems.Contains("Shield")) continue; // skip shielded players
 
-            // Basic rule: stun player closest to winning
+            // stun player closest to winning
             if (best == null || p.currentTile > best.currentTile)
                 best = p;
         }
@@ -211,17 +211,15 @@ public class BotDecisionSystem : MonoBehaviour
 
 
     // -----------------------
-    // SAMPLE HELPER LOGIC
+    // HELPER LOGIC
     // -----------------------
     private bool IsPlayerAhead(PlayerProfile bot)
     {
-        // You should connect to GameManager_Bots to read tiles
         return true; // placeholder
     }
 
     private bool IsNearSnake(PlayerProfile bot)
     {
-        // If next tile is 26, 64, 90, 81, 94 (your snake positions)
         return false; // placeholder
     }
 

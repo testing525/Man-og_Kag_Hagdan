@@ -2165,8 +2165,6 @@ MonoBehaviour:
     playerName: 
     currentTile: 0
     points: 0
-    isBot: 0
-    crowns: 0
     ownedItems: []
 --- !u!1 &77306960
 GameObject:
@@ -2760,14 +2758,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c3e8c334559e9245ae4a8dec2179530, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameManager: {fileID: 0}
-  gameManagerBots: {fileID: 584666770}
+  gameManager: {fileID: 584666766}
+  gameManagerBots: {fileID: 0}
   currentUser:
     playerName: 
     currentTile: 0
     points: 0
-    isBot: 0
-    crowns: 0
     ownedItems: []
   characterButtons:
   - {fileID: 133960733}
@@ -2786,8 +2782,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb329e287f3413e48bc97a42875250de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameManager: {fileID: 0}
-  gameManagerBots: {fileID: 584666770}
+  gameManager: {fileID: 584666766}
+  gameManagerBots: {fileID: 0}
   bombPrefab: {fileID: 3847080349869429913, guid: 10ce659b54a72d547a1391f1a9541ab9, type: 3}
 --- !u!1 &111762167
 GameObject:
@@ -4886,63 +4882,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tileNumber: 0
---- !u!1 &220669267
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 220669269}
-  - component: {fileID: 220669268}
-  - component: {fileID: 220669270}
-  m_Layer: 0
-  m_Name: Bot
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &220669268
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 220669267}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 007cd89f01dd4b94a8de2df25a497644, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &220669269
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 220669267}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.9825103, y: -1.7541221, z: -0.03724919}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &220669270
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 220669267}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af6d3c4a198ff4a4ea889015131206e2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &221874346
 GameObject:
   m_ObjectHideFlags: 0
@@ -12460,57 +12399,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!1 &546809566
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 546809567}
-  - component: {fileID: 546809568}
-  m_Layer: 0
-  m_Name: LearningManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &546809567
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 546809566}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.9825103, y: -1.7541221, z: -0.03724919}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &546809568
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 546809566}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a9a68cf3e4135d5498ec91306b539ca4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameManager: {fileID: 0}
-  gameManagerBots: {fileID: 584666770}
-  data:
-    itemUseFrequencyList: []
-    tileItemUsageList: []
-    roundItemPurchasesList: []
-    itemHitEvents: []
 --- !u!1 &553114330
 GameObject:
   m_ObjectHideFlags: 0
@@ -12846,10 +12734,10 @@ GameObject:
   m_Component:
   - component: {fileID: 584666764}
   - component: {fileID: 584666765}
+  - component: {fileID: 584666766}
   - component: {fileID: 584666767}
   - component: {fileID: 584666768}
   - component: {fileID: 584666769}
-  - component: {fileID: 584666770}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -12990,6 +12878,55 @@ MonoBehaviour:
   - {fileID: 1044798522}
   - {fileID: 1939206540}
   tilesParent: {fileID: 365827715}
+--- !u!114 &584666766
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 584666763}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee8c23730d5d3ac4cb36c934973b7943, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  diceUI: {fileID: 782338694}
+  boardManager: {fileID: 584666765}
+  scoreManager: {fileID: 584666767}
+  eventScript: {fileID: 584666768}
+  inventoryUI: {fileID: 1923607855}
+  playerState: 0
+  stunSelectionUI: {fileID: 104611799}
+  bombPlacement: {fileID: 104611800}
+  players:
+  - {fileID: 998992675}
+  - {fileID: 73531605}
+  - {fileID: 2024979187}
+  - {fileID: 1117132738}
+  playerProfiles:
+  - playerName: Jerome
+    currentTile: 0
+    points: 0
+    ownedItems: []
+  - playerName: Jack
+    currentTile: 0
+    points: 0
+    ownedItems: []
+  - playerName: Clarice
+    currentTile: 0
+    points: 0
+    ownedItems: []
+  - playerName: Mary
+    currentTile: 0
+    points: 0
+    ownedItems: []
+  playerStates: {fileID: 584666769}
+  yOffset: 0.4
+  moveSpeed: 2
+  ladderSnakeSpeed: 2
+  stepDelay: 0.1
+  currentTiles: 
+  currentPlayerIndex: 0
 --- !u!114 &584666767
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13021,10 +12958,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shopManager: {fileID: 1661868790}
   roundCount: 0
-  currentRound: 0
   currentState: 0
-  gameManager: {fileID: 0}
-  gameManagerBots: {fileID: 584666770}
+  gameManager: {fileID: 584666766}
+  gameManagerBots: {fileID: 0}
 --- !u!114 &584666769
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13038,66 +12974,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stunDuration: 2
---- !u!114 &584666770
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 584666763}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d63855e508d23694499169b9191e4dd6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  diceUI: {fileID: 782338694}
-  boardManager: {fileID: 584666765}
-  scoreManager: {fileID: 584666767}
-  eventScript: {fileID: 584666768}
-  inventoryUI: {fileID: 1923607855}
-  playerState: 0
-  stunSelectionUI: {fileID: 104611799}
-  bombPlacement: {fileID: 104611800}
-  uploader: {fileID: 1705906075}
-  gameStartTime: 0
-  players:
-  - {fileID: 998992675}
-  - {fileID: 73531605}
-  - {fileID: 2024979187}
-  - {fileID: 1117132738}
-  playerProfiles:
-  - playerName: Jerome
-    currentTile: 0
-    points: 0
-    isBot: 0
-    crowns: 0
-    ownedItems: []
-  - playerName: Jack
-    currentTile: 0
-    points: 0
-    isBot: 1
-    crowns: 0
-    ownedItems: []
-  - playerName: Anna
-    currentTile: 0
-    points: 0
-    isBot: 1
-    crowns: 0
-    ownedItems: []
-  - playerName: Jess
-    currentTile: 0
-    points: 0
-    isBot: 1
-    crowns: 0
-    ownedItems: []
-  playerStates: {fileID: 584666769}
-  yOffset: 0.2
-  moveSpeed: 10
-  ladderSnakeSpeed: 5
-  stepDelay: 0.1
-  currentPlayerIndex: 0
-  ladderTiles: 04000000090000001c000000270000004d000000
-  snakeTiles: 1a000000400000005a000000510000005e000000
 --- !u!1 &586636175
 GameObject:
   m_ObjectHideFlags: 0
@@ -14516,6 +14392,56 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tileNumber: 0
+--- !u!1 &710318676
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 710318678}
+  - component: {fileID: 710318677}
+  m_Layer: 0
+  m_Name: Editor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &710318677
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 710318676}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9a68cf3e4135d5498ec91306b539ca4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameManager: {fileID: 584666766}
+  data:
+    itemUseFrequencyList: []
+    tileItemUsageList: []
+    roundItemPurchasesList: []
+    itemHitEvents: []
+--- !u!4 &710318678
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 710318676}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.9825103, y: -1.7541221, z: -0.03724919}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &726097147
 GameObject:
   m_ObjectHideFlags: 0
@@ -19197,8 +19123,6 @@ MonoBehaviour:
     playerName: 
     currentTile: 0
     points: 0
-    isBot: 0
-    crowns: 0
     ownedItems: []
 --- !u!1 &1006085900
 GameObject:
@@ -20737,8 +20661,6 @@ MonoBehaviour:
     playerName: 
     currentTile: 0
     points: 0
-    isBot: 0
-    crowns: 0
     ownedItems: []
 --- !u!1 &1125051898
 GameObject:
@@ -25532,6 +25454,56 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1393971746}
   m_CullTransparentMesh: 1
+--- !u!1 &1411847470
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1411847472}
+  - component: {fileID: 1411847471}
+  m_Layer: 0
+  m_Name: LearningManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1411847471
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1411847470}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9a68cf3e4135d5498ec91306b539ca4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameManager: {fileID: 0}
+  data:
+    itemUseFrequencyList: []
+    tileItemUsageList: []
+    roundItemPurchasesList: []
+    itemHitEvents: []
+--- !u!4 &1411847472
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1411847470}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.9825103, y: -1.7541221, z: -0.03724919}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1421260022
 GameObject:
   m_ObjectHideFlags: 0
@@ -29503,14 +29475,13 @@ MonoBehaviour:
     cost: 20
   - itemName: Stun Gun
     itemSprite: {fileID: -6369938231147535289, guid: 47bfd89161bc86f4abd4e11d61583047, type: 3}
-    cost: 10
+    cost: 35
   - itemName: Shield
     itemSprite: {fileID: -6717884257390833292, guid: 476c9f0712cc4df46b8967589be2e847, type: 3}
     cost: 5
   - itemName: Bomb
     itemSprite: {fileID: -1483665779731714255, guid: 8bc419df2a94296478d566dc6d63c1ba, type: 3}
     cost: 14
-  displayedItems: []
 --- !u!1 &1666295239
 GameObject:
   m_ObjectHideFlags: 0
@@ -30317,7 +30288,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1704161498}
   m_CullTransparentMesh: 1
---- !u!1 &1705906073
+--- !u!1 &1704847225
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -30325,42 +30296,42 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1705906074}
-  - component: {fileID: 1705906075}
+  - component: {fileID: 1704847227}
+  - component: {fileID: 1704847226}
   m_Layer: 0
-  m_Name: ForDatabase
+  m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1705906074
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1705906073}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 886.2449, y: 578.1654, z: 2.8264284}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1705906075
+--- !u!114 &1704847226
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1705906073}
-  m_Enabled: 1
+  m_GameObject: {fileID: 1704847225}
+  m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5cde81dda78b23c49b5c39e71a02c555, type: 3}
+  m_Script: {fileID: 11500000, guid: 7a40523fd2dba9540a5f7552bd6dcaf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &1704847227
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1704847225}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.9825103, y: -1.7541221, z: -0.03724919}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1708557794
 GameObject:
   m_ObjectHideFlags: 0
@@ -34468,8 +34439,8 @@ MonoBehaviour:
   - {fileID: 2074509795}
   - {fileID: 416246729}
   cancelButton: {fileID: 1704161500}
-  gameManager: {fileID: 0}
-  gameManagerBots: {fileID: 584666770}
+  gameManager: {fileID: 584666766}
+  gameManagerBots: {fileID: 0}
   shopManager: {fileID: 1661868790}
   eventManager: {fileID: 584666768}
 --- !u!1 &1924671594
@@ -37119,8 +37090,6 @@ MonoBehaviour:
     playerName: 
     currentTile: 0
     points: 0
-    isBot: 0
-    crowns: 0
     ownedItems: []
 --- !u!1 &2033863478
 GameObject:
@@ -40536,6 +40505,6 @@ SceneRoots:
   - {fileID: 1898583365}
   - {fileID: 759058402}
   - {fileID: 790278692}
-  - {fileID: 546809567}
-  - {fileID: 220669269}
-  - {fileID: 1705906074}
+  - {fileID: 1411847472}
+  - {fileID: 710318678}
+  - {fileID: 1704847227}

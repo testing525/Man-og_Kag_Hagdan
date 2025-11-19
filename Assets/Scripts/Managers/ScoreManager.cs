@@ -8,9 +8,6 @@ public class ScoreManager : MonoBehaviour
 
     private PlayerProfile[] playerProfiles; // Will be assigned at runtime
 
-    /// <summary>
-    /// Assign the player profiles from GameManager
-    /// </summary>
     public void SetPlayerProfiles(PlayerProfile[] profiles)
     {
         playerProfiles = profiles;
@@ -29,7 +26,7 @@ public class ScoreManager : MonoBehaviour
         {
             if (scoreTexts[i] != null && playerProfiles[i] != null)
             {
-                scoreTexts[i].text = $"Score: {playerProfiles[i].points}";
+                scoreTexts[i].text = $"{playerProfiles[i].points} Points";
             }
         }
     }
