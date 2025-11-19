@@ -16,26 +16,39 @@ public class Bomb : MonoBehaviour
         PlayerMarker marker = collision.GetComponent<PlayerMarker>();
         if (!marker) return;
 
-        GameManager gm = FindAnyObjectByType<GameManager>();
         PlayerProfile target = marker.playerProfile;
-        int index = System.Array.IndexOf(gm.playerProfiles, target);
+
+        GameManager gm = FindAnyObjectByType<GameManager>();
+        GameManager_Bots gmBots = FindAnyObjectByType<GameManager_Bots>();
+
+        int index = -1;
+
+        if (gm != null)
+            index = System.Array.IndexOf(gm.playerProfiles, target);
+        else if (gmBots != null)
+            index = System.Array.IndexOf(gmBots.playerProfiles, target);
 
         if (index < 0) return;
 
-        // 🛡 AUTO SHIELD CHECK (inventory)
+        // Shield block
         if (target.ownedItems.Contains("Shield"))
         {
             Debug.Log($"🛡 {target.playerName}'s shield auto-blocked the bomb!");
-            target.ownedItems.Remove("Shield");  // consume the shield
-            return; // ❗ Do NOT apply pushback
+            target.ownedItems.Remove("Shield");
+            return;
         }
 
+        // Pushback amount
         int moveBack = tilesToPushBack;
-
-        // 💣 Owner penalty
         if (target == owner)
             moveBack -= 6;
 
-        gm.StartCoroutine(gm.MovePlayerBackwards(index, moveBack));
+        // ⭐ Register the effect (but don't handle turn flow)
+        //if (gm != null)
+            //gm.RegisterBombPushback(index, moveBack);
+        if (gmBots != null)
+            gmBots.RegisterBombPushback(index, moveBack);
     }
+
+
 }

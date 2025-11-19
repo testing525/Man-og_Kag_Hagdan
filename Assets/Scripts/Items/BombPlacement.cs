@@ -49,16 +49,5 @@ public class BombPlacement : MonoBehaviour
         Instantiate(bombPrefab, spawnPos, Quaternion.identity);
 
         isPlacing = false;
-
-        if (gameManager != null)
-            gameManager.eventScript.currentState = State.Normal;
-        else if (gameManagerBots != null)
-            gameManagerBots.eventScript.currentState = State.Normal;
-
-        // Proceed to next player after bomb placed
-        if (gameManager != null)
-            gameManager.ProceedToNextPlayer();
-        else if (gameManagerBots != null)
-            gameManagerBots.ProceedToNextPlayer();
     }
 }

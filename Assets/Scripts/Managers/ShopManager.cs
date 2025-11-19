@@ -3,9 +3,12 @@ using UnityEngine.UI;
 using TMPro;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 
 public class ShopManager : MonoBehaviour
 {
+    public static ShopManager Instance;
+
     [Header("References")]
     public Transform itemLayout;           // Parent that holds all 6 ItemContainers
     public Image[] itemImages;             // Auto-filled or manually assigned (6)
@@ -27,6 +30,7 @@ public class ShopManager : MonoBehaviour
 
     [Header("Item Data")]
     public List<ItemData> allItems;        // All possible items in the game
+    public List<ItemData> displayedItems = new List<ItemData>();
 
     private ItemData selectedItem;
     private int currentPlayer = 0;
@@ -37,6 +41,7 @@ public class ShopManager : MonoBehaviour
 
     void Start()
     {
+        Instance = this;
         // Find event script in scene (optional)
         eventScript = FindAnyObjectByType<EventScript>();
 
@@ -74,7 +79,29 @@ public class ShopManager : MonoBehaviour
         while (currentPlayer < totalPlayers)
         {
             playerTurnText.text = $"Player {currentPlayer + 1} Turn";
-            yield return StartCoroutine(RunShopTimer());
+            PlayerProfile p = players[currentPlayer];
+
+            if (p.isBot)
+            {
+                yield return BotDecisionSystem.Instance.DecideItemToBuyRoutine(p, (itemData) =>
+                {
+                    if (itemData != null)
+                    {
+                        selectedItem = itemData;
+                        BuySelectedItem(); // automatically buy
+                        Debug.Log($"🤖 Bot {p.playerName} bought {itemData.itemName}");
+                    }
+                    else
+                    {
+                        Debug.Log($"🤖 Bot {p.playerName} skipped buying this turn.");
+                    }
+                });
+            }
+            else
+            {
+                yield return StartCoroutine(RunShopTimer());
+            }
+
             currentPlayer++;
         }
 
@@ -111,6 +138,8 @@ public class ShopManager : MonoBehaviour
             shopRoutine = null;
         }
 
+        displayedItems.Clear();
+
         gameObject.SetActive(false);
         timerText.text = "";
         playerTurnText.text = "";
@@ -141,6 +170,7 @@ public class ShopManager : MonoBehaviour
         {
             int index = i;
             ItemData item = randomized[i];
+            displayedItems.Add(item);
             itemImages[i].sprite = item.itemSprite;
             itemImages[i].preserveAspect = true;
 
@@ -195,7 +225,7 @@ public class ShopManager : MonoBehaviour
 
         Debug.Log($"🛒 Player {currentPlayer + 1} bought: {selectedItem.itemName}");
 
-        LearningManager.Instance.RecordItemBought(selectedItem.itemName, eventScript.roundCount);
+        LearningManager.Instance.RecordItemBought(selectedItem.itemName, eventScript.currentRound);
 
 
         // Update the UI
@@ -204,6 +234,10 @@ public class ShopManager : MonoBehaviour
         // Optional: immediately end their turn after buying
         // currentPlayer++;
     }
+
+ 
+
+
 
     public ItemData GetItemData(string itemName)
     {
@@ -240,3 +274,10 @@ public class ItemData
     public Sprite itemSprite;
     public int cost;
 }
+
+[System.Serializable]
+public class BotPythonResult
+{
+    public string itemToBuy;  
+}
+

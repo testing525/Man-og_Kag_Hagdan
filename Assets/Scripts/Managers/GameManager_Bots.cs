@@ -1,9 +1,11 @@
-﻿using UnityEngine;
+﻿using System;
 using System.Collections;
 using Unity.VisualScripting;
+using UnityEngine;
 
 public class GameManager_Bots : MonoBehaviour
 {
+    public static GameManager_Bots instance;
     [Header("References")]
     public Dice diceUI;
     public BoardManager boardManager;
@@ -19,18 +21,12 @@ public class GameManager_Bots : MonoBehaviour
     public PlayerProfile[] playerProfiles;
     public PlayerStates playerStates;
 
-    [Header("Player Types")]
-    public bool[] isBot; // length = 4, true if player is bot
-
-
-
     [Header("Player Settings")]
     public float yOffset = 0.2f;
     public float moveSpeed = 10f;
     public float ladderSnakeSpeed = 5f;
     public float stepDelay = 0.1f;
 
-    public int[] currentTiles;
     public int currentPlayerIndex = 0;
     private bool isMoving = false;
 
@@ -38,7 +34,10 @@ public class GameManager_Bots : MonoBehaviour
     public int[] snakeTiles = new int[] { 26, 64, 90, 81, 94 };
 
 
-
+    private void Awake()
+    {
+        instance = this;
+    }
 
     void Start()
     {
@@ -75,12 +74,6 @@ public class GameManager_Bots : MonoBehaviour
 
         diceUI.OnDiceRolled += HandleDiceResult;
 
-        currentTiles = new int[4];
-        for (int i = 0; i < 4; i++)
-        {
-            currentTiles[i] = 0;
-            PlacePlayerAtStart(i);
-        }
 
         scoreManager.UpdateScoreUI();
         Debug.Log($"Player {currentPlayerIndex + 1}'s turn!");
@@ -98,7 +91,7 @@ public class GameManager_Bots : MonoBehaviour
             return; // pause dice rolling if player is checking inventory
 
         Debug.Log($"🎲 Player {currentPlayerIndex + 1} rolled a {rollValue}");
-        int targetTile = currentTiles[currentPlayerIndex] + rollValue;
+        int targetTile = playerProfiles[currentPlayerIndex].currentTile + rollValue;
         if (targetTile > 100) targetTile = 100;
 
         StartCoroutine(MovePlayerStepByStep(currentPlayerIndex, targetTile));
@@ -106,8 +99,9 @@ public class GameManager_Bots : MonoBehaviour
 
     private bool IsBotTurn()
     {
-        return isBot[currentPlayerIndex];
+        return playerProfiles[currentPlayerIndex].isBot;
     }
+
 
 
 
@@ -118,17 +112,17 @@ public class GameManager_Bots : MonoBehaviour
         PlayerProfile profile = playerProfiles[playerIndex];
 
         // Step-by-step movement
-        while (currentTiles[playerIndex] < targetTile)
+        while (playerProfiles[playerIndex].currentTile < targetTile)
         {
-            currentTiles[playerIndex]++;
-            Vector3 nextPos = boardManager.GetTilePosition(currentTiles[playerIndex]) + new Vector3(0, yOffset, 0);
+            playerProfiles[playerIndex].currentTile++;
+            Vector3 nextPos = boardManager.GetTilePosition(playerProfiles[playerIndex].currentTile) +
+                              new Vector3(0, yOffset, 0);
+
             yield return StartCoroutine(MoveToPosition(players[playerIndex], nextPos, moveSpeed));
 
             int points = 10;
             if (playerStates.GetState(profile) == PlayerState.PointsMultiplier)
-            {
                 points += 5;
-            }
 
             profile.AddPoints(points);
             UpdateScoreUI();
@@ -136,15 +130,50 @@ public class GameManager_Bots : MonoBehaviour
             yield return new WaitForSeconds(stepDelay);
         }
 
+        // WIN / CROWN CHECK
+        if (playerProfiles[playerIndex].currentTile == 100)
+        {
+            Debug.Log($"👑 {playerProfiles[playerIndex].playerName} reached tile 100!");
+
+            // Add 5000 points
+            playerProfiles[playerIndex].AddPoints(5000);
+            UpdateScoreUI();
+
+            // Add crown
+            playerProfiles[playerIndex].crowns++;
+            Debug.Log($"👑 Crown awarded! {playerProfiles[playerIndex].playerName} now has {playerProfiles[playerIndex].crowns} crown(s)");
+
+            // Did they win the game?
+            if (playerProfiles[playerIndex].crowns >= 2)
+            {
+                Debug.Log($"🏆 {playerProfiles[playerIndex].playerName} WINS THE GAME!");
+                yield break; // STOP ALL MOVEMENT / TURNS
+            }
+
+            // If not yet winner, reset to tile 1
+            playerProfiles[playerIndex].currentTile = 1;
+
+            // Snap them to tile 1
+            Vector3 resetPos = boardManager.GetTilePosition(1) + new Vector3(0, yOffset, 0);
+            players[playerIndex].transform.position = resetPos;
+
+            Debug.Log($"🔄 {playerProfiles[playerIndex].playerName} returns to tile 1!");
+
+            isMoving = false;
+
+            // Continue turn flow
+            yield return StartCoroutine(HandlePostMoveActions(playerIndex));
+            yield break;
+        }
+
         // Ladder check
-        int ladderTile = CheckForLadder(currentTiles[playerIndex]);
-        if (ladderTile != currentTiles[playerIndex])
+        int ladderTile = CheckForLadder(playerProfiles[playerIndex].currentTile);
+        if (ladderTile != playerProfiles[playerIndex].currentTile)
         {
             yield return new WaitForSeconds(0.5f);
             yield return StartCoroutine(MoveSmoothLerp(players[playerIndex], ladderTile, playerIndex));
-            currentTiles[playerIndex] = ladderTile;
+            playerProfiles[playerIndex].currentTile = ladderTile;
 
-            // Award points (consider PointsMultiplier)
             int points = 10;
             if (playerStates.GetState(profile) == PlayerState.PointsMultiplier)
                 points += 5;
@@ -154,22 +183,20 @@ public class GameManager_Bots : MonoBehaviour
         }
 
         // Snake check
-        int snakeTile = CheckForSnake(currentTiles[playerIndex]);
-        if (snakeTile != currentTiles[playerIndex])
+        int snakeTile = CheckForSnake(playerProfiles[playerIndex].currentTile);
+        if (snakeTile != playerProfiles[playerIndex].currentTile)
         {
-            // Check Anti Snake Spray
             if (profile.ownedItems.Contains("Anti Snake Spray"))
             {
-                Debug.Log($"🧴 {profile.playerName} avoided a snake at tile {currentTiles[playerIndex]} using Anti Snake Spray!");
-                profile.ownedItems.Remove("Anti Snake Spray"); // consume
+                Debug.Log($"🧴 {profile.playerName} avoided a snake!");
+                profile.ownedItems.Remove("Anti Snake Spray");
             }
             else
             {
                 yield return new WaitForSeconds(0.5f);
                 yield return StartCoroutine(MoveSmoothLerp(players[playerIndex], snakeTile, playerIndex));
-                currentTiles[playerIndex] = snakeTile;
+                playerProfiles[playerIndex].currentTile = snakeTile;
 
-                // Award points for moving
                 int points = 10;
                 if (playerStates.GetState(profile) == PlayerState.PointsMultiplier)
                     points += 5;
@@ -179,28 +206,70 @@ public class GameManager_Bots : MonoBehaviour
             }
         }
 
-
-        Debug.Log($"📍 Player {playerIndex + 1} reached tile {currentTiles[playerIndex]}");
+        Debug.Log($"📍 Player {playerIndex + 1} reached tile {playerProfiles[playerIndex].currentTile}");
 
         isMoving = false;
 
-        // Inventory check
-        PlayerProfile currentProfile = playerProfiles[playerIndex];
-        if (currentProfile.ownedItems.Count > 0 && inventoryUI != null
-            && eventScript.currentState != State.PlayerIsUsingItem)
+        // call post-movement logic after
+        yield return StartCoroutine(HandlePostMoveActions(playerIndex));
+    }
+
+    private IEnumerator HandlePostMoveActions(int playerIndex)
+    {
+        PlayerProfile profile = playerProfiles[playerIndex];
+
+        // HUMAN PLAYER
+        if (!profile.isBot && profile.ownedItems.Count > 0)
         {
             Debug.Log($"👜 Player {playerIndex + 1} has items. Showing inventory...");
-            inventoryUI.ShowInventory(currentProfile);
+            eventScript.currentState = State.PlayerCheckingInventory;
+            inventoryUI.ShowInventory(profile);
+            yield break;
+        }
+        // BOT PLAYER
+        else if (profile.isBot && profile.ownedItems.Count > 0)
+        {
+            Debug.Log("🤖 Bot deciding to use an item...");
             eventScript.currentState = State.PlayerCheckingInventory;
 
-            isMoving = false;
-            yield break; // pause until player uses item or cancels
+            bool usedItem = false;
+
+            yield return StartCoroutine(
+                BotDecisionSystem.Instance.DecideUseItem(
+                    profile,
+                    (chosenItem) =>
+                    {
+                        if (!string.IsNullOrEmpty(chosenItem))
+                        {
+                            Debug.Log($"🤖 Bot uses {chosenItem}");
+                            OnItemUsed(profile, chosenItem);
+                            usedItem = true;
+                        }
+                        else
+                        {
+                            Debug.Log("🤖 Bot decided NOT to use any item.");
+                            ProceedToNextPlayer();
+  
+                        }
+                    })
+            );
+
+            // If an item was used (example pogo stick), wait for movement to fully finish
+            if (usedItem)
+            {
+                while (isMoving)
+                    yield return null;
+
+                yield return new WaitForSeconds(0.3f);
+            }
+        }
+        else
+        {
+            ProceedToNextPlayer();
         }
 
-
-        // No items: proceed automatically
-        ProceedToNextPlayer();
     }
+
 
     private IEnumerator BotTurn()
     {
@@ -210,7 +279,7 @@ public class GameManager_Bots : MonoBehaviour
         diceUI.RollForBot((rollValue) =>
         {
             Debug.Log($"🤖 {playerProfiles[currentPlayerIndex].playerName} rolled {rollValue}");
-            int targetTile = currentTiles[currentPlayerIndex] + rollValue;
+            int targetTile = playerProfiles[currentPlayerIndex].currentTile + rollValue;
             if (targetTile > 100) targetTile = 100;
 
             StartCoroutine(MovePlayerStepByStep(currentPlayerIndex, targetTile));
@@ -220,7 +289,7 @@ public class GameManager_Bots : MonoBehaviour
 
     public IEnumerator MovePlayerBackwards(int playerIndex, int tilesToMoveBack)
     {
-        int startTile = currentTiles[playerIndex];
+        int startTile = playerProfiles[playerIndex].currentTile;
         int targetTile = startTile - tilesToMoveBack;
         if (targetTile < 1) targetTile = 1; // clamp to start
 
@@ -228,10 +297,10 @@ public class GameManager_Bots : MonoBehaviour
 
         isMoving = true;
 
-        while (currentTiles[playerIndex] > targetTile)
+        while (playerProfiles[playerIndex].currentTile > targetTile)
         {
-            currentTiles[playerIndex]--;
-            Vector3 nextPos = boardManager.GetTilePosition(currentTiles[playerIndex]) + new Vector3(0, yOffset, 0);
+            playerProfiles[playerIndex].currentTile--;
+            Vector3 nextPos = boardManager.GetTilePosition(playerProfiles[playerIndex].currentTile) + new Vector3(0, yOffset, 0);
             yield return StartCoroutine(MoveToPosition(players[playerIndex], nextPos, moveSpeed));
             yield return new WaitForSeconds(stepDelay);            
         }
@@ -239,6 +308,25 @@ public class GameManager_Bots : MonoBehaviour
         isMoving = false;
     }
 
+    public void RegisterBombPushback(int playerIndex, int moveBack)
+    {
+        StartCoroutine(HandleBombPushback(playerIndex, moveBack));
+    }
+
+    private IEnumerator HandleBombPushback(int playerIndex, int moveBack)
+    {
+        // Lock game state
+        eventScript.currentState = State.PlayerIsUsingItem;
+
+        // Move backwards
+        yield return StartCoroutine(MovePlayerBackwards(playerIndex, moveBack));
+
+        // Restore normal state
+        eventScript.currentState = State.Normal;
+
+        // Continue turn flow
+        ProceedToNextPlayer();
+    }
 
 
 
@@ -348,6 +436,7 @@ public class GameManager_Bots : MonoBehaviour
         eventScript.currentState = State.PlayerIsUsingItem;
 
         Debug.Log($"🎁 Item used: {itemName} by {player.playerName}");
+        LearningManager.Instance.RecordItemUsed(itemName, player.currentTile);
         inventoryUI.gameObject.SetActive(false);
 
         if (player.ownedItems.Contains(itemName))
@@ -377,9 +466,8 @@ public class GameManager_Bots : MonoBehaviour
         // Optional: wait a tiny bit for visual effect or animation
         yield return new WaitForSeconds(0.2f);
 
-        if (eventScript.currentState != State.PlayerIsPlacingItem)
+        if (eventScript.currentState == State.Normal)
         {
-            eventScript.currentState = State.Normal;
             ProceedToNextPlayer();
         }
     }
@@ -391,19 +479,22 @@ public class GameManager_Bots : MonoBehaviour
             case "Shield":
                 playerStates.SetShielded(player);
                 Debug.Log($"🛡 Shield applied for {player.playerName}");
+                eventScript.currentState = State.Normal;
                 break;
             case "ExtraPoints":
                 player.AddPoints(20);
+                eventScript.currentState = State.Normal;
                 UpdateScoreUI();
                 break;
             case "Stun Gun":
-                stunSelectionUI.Show(player);
+                HandleStunItem(player);
                 break;
             case "Bomb":
                 bombPlacement.StartPlacingBomb(player);
                 break;
             case "Points  Multiplier":
                 playerStates.SetPointsMultiplier(player);
+                eventScript.currentState = State.Normal;
                 break;
 
                 // Add more items here
@@ -411,26 +502,73 @@ public class GameManager_Bots : MonoBehaviour
     }
 
 
-
+    //ITEM USAGE
     private IEnumerator UsePogo(PlayerProfile player, int tilesToMove)
     {
         int playerIndex = System.Array.IndexOf(playerProfiles, player);
         if (playerIndex < 0)
-        {
-            Debug.LogWarning("⚠️ Player not found in profiles!");
             yield break;
+
+        int targetTile = playerProfiles[playerIndex].currentTile + tilesToMove;
+        if (targetTile > 100) targetTile = 100;
+
+        Debug.Log($"🦘 Pogo Stick: Player {playerIndex + 1} jumps to {targetTile}");
+
+        isMoving = true;
+
+        yield return StartCoroutine(MovePlayerStepByStep(playerIndex, targetTile));
+
+        isMoving = false;
+        eventScript.currentState = State.Normal;
+    }
+
+    private void HandleStunItem(PlayerProfile user)
+    {
+        // HUMAN PLAYER: show UI
+        if (!user.isBot)
+        {
+            stunSelectionUI.Show(user);
+            return; // Wait for UI to select target
+        }
+        else
+        {
+            // BOT LOGIC: pick best target
+            PlayerProfile target = BotDecisionSystem.Instance.ChooseStunTarget(user);
+
+            if (target == null)
+            {
+                Debug.Log("🤖 Bot could not find stun target");
+                ProceedToNextPlayer();
+                return;
+            }
+
+            // Shield check
+            if (target.ownedItems.Contains("Shield"))
+            {
+                Debug.Log($"🛡 Shield blocked stun on {target.playerName}");
+                target.ownedItems.Remove("Shield");
+                ProceedToNextPlayer();
+                return;
+            }
+
+            // Apply stun
+            playerStates.SetStunned(target);
+            LearningManager.Instance.RecordItemHit(target, "Stun Gun");
+
+            Debug.Log($"🤖 Bot stunned {target.playerName}!");
+
+            // Skip if target was currently playing
+            if (playerProfiles[currentPlayerIndex] == target)
+            {
+                ProceedToNextPlayer();
+                return;
+            }
+            eventScript.currentState = State.Normal;
+
+            ProceedToNextPlayer();
         }
 
-        int targetTile = currentTiles[playerIndex] + tilesToMove;
-        if (targetTile > 100) targetTile = 100;
-        if (targetTile < 1) targetTile = 1; // just in case of negative tiles
-
-        Debug.Log($"🦘 Pogo Stick activated! Player {playerIndex + 1} jumps to {targetTile}");
-
-        // Reuse MovePlayerStepByStep
-        yield return StartCoroutine(MovePlayerStepByStep(playerIndex, targetTile));
-        eventScript.currentState = State.Normal;
-
+            
     }
 
 

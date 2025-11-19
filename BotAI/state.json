@@ -1,0 +1,10 @@
+{
+    "player": "Anna",
+    "tiles": 71,
+    "points": 790,
+    "ownedItems": [
+        "Points Multiplier",
+        "Pogo Stick"
+    ],
+    "round": 11
+}

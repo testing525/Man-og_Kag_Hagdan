@@ -2163,7 +2163,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerProfile:
     playerName: 
+    currentTile: 0
     points: 0
+    isBot: 0
     ownedItems: []
 --- !u!1 &77306960
 GameObject:
@@ -2761,7 +2763,9 @@ MonoBehaviour:
   gameManagerBots: {fileID: 584666770}
   currentUser:
     playerName: 
+    currentTile: 0
     points: 0
+    isBot: 0
     ownedItems: []
   characterButtons:
   - {fileID: 133960733}
@@ -4880,6 +4884,63 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tileNumber: 0
+--- !u!1 &220669267
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 220669269}
+  - component: {fileID: 220669268}
+  - component: {fileID: 220669270}
+  m_Layer: 0
+  m_Name: Bot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &220669268
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 220669267}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 007cd89f01dd4b94a8de2df25a497644, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &220669269
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 220669267}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.9825103, y: -1.7541221, z: -0.03724919}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &220669270
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 220669267}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af6d3c4a198ff4a4ea889015131206e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &221874346
 GameObject:
   m_ObjectHideFlags: 0
@@ -12441,6 +12502,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9a68cf3e4135d5498ec91306b539ca4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 0}
+  gameManagerBots: {fileID: 584666770}
+  data:
+    itemUseFrequencyList: []
+    tileItemUsageList: []
+    roundItemPurchasesList: []
+    itemHitEvents: []
 --- !u!1 &553114330
 GameObject:
   m_ObjectHideFlags: 0
@@ -12951,6 +13019,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shopManager: {fileID: 1661868790}
   roundCount: 0
+  currentRound: 0
   currentState: 0
   gameManager: {fileID: 0}
   gameManagerBots: {fileID: 584666770}
@@ -12994,24 +13063,30 @@ MonoBehaviour:
   - {fileID: 1117132738}
   playerProfiles:
   - playerName: Jerome
+    currentTile: 0
     points: 0
+    isBot: 0
     ownedItems: []
   - playerName: Jack
+    currentTile: 0
     points: 0
+    isBot: 1
     ownedItems: []
   - playerName: Anna
+    currentTile: 0
     points: 0
+    isBot: 1
     ownedItems: []
   - playerName: Jess
+    currentTile: 0
     points: 0
+    isBot: 1
     ownedItems: []
   playerStates: {fileID: 584666769}
-  isBot: 00010101
   yOffset: 0.2
   moveSpeed: 10
   ladderSnakeSpeed: 5
   stepDelay: 0.1
-  currentTiles: 
   currentPlayerIndex: 0
   ladderTiles: 04000000090000001c000000270000004d000000
   snakeTiles: 1a000000400000005a000000510000005e000000
@@ -19112,7 +19187,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerProfile:
     playerName: 
+    currentTile: 0
     points: 0
+    isBot: 0
     ownedItems: []
 --- !u!1 &1006085900
 GameObject:
@@ -20649,7 +20726,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerProfile:
     playerName: 
+    currentTile: 0
     points: 0
+    isBot: 0
     ownedItems: []
 --- !u!1 &1125051898
 GameObject:
@@ -29400,7 +29479,7 @@ MonoBehaviour:
   players: []
   timerText: {fileID: 2064773997}
   playerTurnText: {fileID: 1325412827}
-  shopTimePerPlayer: 3
+  shopTimePerPlayer: 10
   totalPlayers: 4
   allItems:
   - itemName: Anti Snake Spray
@@ -29414,13 +29493,14 @@ MonoBehaviour:
     cost: 20
   - itemName: Stun Gun
     itemSprite: {fileID: -6369938231147535289, guid: 47bfd89161bc86f4abd4e11d61583047, type: 3}
-    cost: 35
+    cost: 10
   - itemName: Shield
     itemSprite: {fileID: -6717884257390833292, guid: 476c9f0712cc4df46b8967589be2e847, type: 3}
     cost: 5
   - itemName: Bomb
     itemSprite: {fileID: -1483665779731714255, guid: 8bc419df2a94296478d566dc6d63c1ba, type: 3}
     cost: 14
+  displayedItems: []
 --- !u!1 &1666295239
 GameObject:
   m_ObjectHideFlags: 0
@@ -36983,7 +37063,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerProfile:
     playerName: 
+    currentTile: 0
     points: 0
+    isBot: 0
     ownedItems: []
 --- !u!1 &2033863478
 GameObject:
@@ -40400,3 +40482,4 @@ SceneRoots:
   - {fileID: 759058402}
   - {fileID: 790278692}
   - {fileID: 546809567}
+  - {fileID: 220669269}

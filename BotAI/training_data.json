@@ -1,0 +1,669 @@
+{
+    "itemUseFrequencyList": [
+        {
+            "key": "Pogo Stick",
+            "value": 101
+        },
+        {
+            "key": "Bomb",
+            "value": 8
+        },
+        {
+            "key": "Stun Gun",
+            "value": 11
+        },
+        {
+            "key": "Points Multiplier",
+            "value": 2
+        },
+        {
+            "key": "Shield",
+            "value": 1
+        },
+        {
+            "key": "Anti Snake Spray",
+            "value": 1
+        }
+    ],
+    "tileItemUsageList": [
+        {
+            "tile": 2,
+            "items": [
+                {
+                    "key": "Pogo Stick",
+                    "value": 2
+                }
+            ]
+        },
+        {
+            "tile": 3,
+            "items": [
+                {
+                    "key": "Pogo Stick",
+                    "value": 7
+                },
+                {
+                    "key": "Bomb",
+                    "value": 1
+                }
+            ]
+        },
+        {
+            "tile": 5,
+            "items": [
+                {
+                    "key": "Stun Gun",
+                    "value": 3
+                },
+                {
+                    "key": "Points Multiplier",
+                    "value": 1
+                },
+                {
+                    "key": "Pogo Stick",
+                    "value": 9
+                }
+            ]
+        },
+        {
+            "tile": 8,
+            "items": [
+                {
+                    "key": "Pogo Stick",
+                    "value": 6
+                },
+                {
+                    "key": "Shield",
+                    "value": 1
+                },
+                {
+                    "key": "Stun Gun",
+                    "value": 1
+                }
+            ]
+        },
+        {
+            "tile": 7,
+            "items": [
+                {
+                    "key": "Pogo Stick",
+                    "value": 7
+                },
+                {
+                    "key": "Stun Gun",
+                    "value": 2
+                }
+            ]
+        },
+        {
+            "tile": 10,
+            "items": [
+                {
+                    "key": "Pogo Stick",
+                    "value": 5
+                }
+            ]
+        },
+        {
+            "tile": 23,
+            "items": [
+                {
+                    "key": "Pogo Stick",
+                    "value": 2
+                }
+            ]
+        },
+        {
+            "tile": 6,
+            "items": [
+                {
+                    "key": "Pogo Stick",
+                    "value": 12
+                },
+                {
+                    "key": "Points Multiplier",
+                    "value": 1
+                }
+            ]
+        },
+        {
+            "tile": 13,
+            "items": [
+                {
+                    "key": "Stun Gun",
+                    "value": 1
+                },
+                {
+                    "key": "Pogo Stick",
+                    "value": 1
+                }
+            ]
+        },
+        {
+            "tile": 11,
+            "items": [
+                {
+                    "key": "Pogo Stick",
+                    "value": 5
+                },
+                {
+                    "key": "Bomb",
+                    "value": 2
+                }
+            ]
+        },
+        {
+            "tile": 18,
+            "items": [
+                {
+                    "key": "Pogo Stick",
+                    "value": 1
+                },
+                {
+                    "key": "Stun Gun",
+                    "value": 1
+                }
+            ]
+        },
+        {
+            "tile": 12,
+            "items": [
+                {
+                    "key": "Pogo Stick",
+                    "value": 2
+                }
+            ]
+        },
+        {
+            "tile": 21,
+            "items": [
+                {
+                    "key": "Pogo Stick",
+                    "value": 2
+                },
+                {
+                    "key": "Bomb",
+                    "value": 2
+                }
+            ]
+        },
+        {
+            "tile": 25,
+            "items": [
+                {
+                    "key": "Pogo Stick",
+                    "value": 1
+                }
+            ]
+        },
+        {
+            "tile": 30,
+            "items": [
+                {
+                    "key": "Pogo Stick",
+                    "value": 4
+                },
+                {
+                    "key": "Stun Gun",
+                    "value": 1
+                },
+                {
+                    "key": "Bomb",
+                    "value": 2
+                }
+            ]
+        },
+        {
+            "tile": 15,
+            "items": [
+                {
+                    "key": "Pogo Stick",
+                    "value": 1
+                }
+            ]
+        },
+        {
+            "tile": 17,
+            "items": [
+                {
+                    "key": "Pogo Stick",
+                    "value": 3
+                }
+            ]
+        },
+        {
+            "tile": 20,
+            "items": [
+                {
+                    "key": "Stun Gun",
+                    "value": 1
+                },
+                {
+                    "key": "Pogo Stick",
+                    "value": 1
+                }
+            ]
+        },
+        {
+            "tile": 19,
+            "items": [
+                {
+                    "key": "Stun Gun",
+                    "value": 1
+                },
+                {
+                    "key": "Bomb",
+                    "value": 1
+                },
+                {
+                    "key": "Pogo Stick",
+                    "value": 1
+                }
+            ]
+        },
+        {
+            "tile": 27,
+            "items": [
+                {
+                    "key": "Pogo Stick",
+                    "value": 1
+                }
+            ]
+        },
+        {
+            "tile": 31,
+            "items": [
+                {
+                    "key": "Pogo Stick",
+                    "value": 2
+                }
+            ]
+        },
+        {
+            "tile": 41,
+            "items": [
+                {
+                    "key": "Pogo Stick",
+                    "value": 2
+                }
+            ]
+        },
+        {
+            "tile": 29,
+            "items": [
+                {
+                    "key": "Pogo Stick",
+                    "value": 1
+                }
+            ]
+        },
+        {
+            "tile": 50,
+            "items": [
+                {
+                    "key": "Pogo Stick",
+                    "value": 2
+                }
+            ]
+        },
+        {
+            "tile": 36,
+            "items": [
+                {
+                    "key": "Pogo Stick",
+                    "value": 2
+                }
+            ]
+        },
+        {
+            "tile": 56,
+            "items": [
+                {
+                    "key": "Pogo Stick",
+                    "value": 1
+                }
+            ]
+        },
+        {
+            "tile": 46,
+            "items": [
+                {
+                    "key": "Pogo Stick",
+                    "value": 1
+                }
+            ]
+        },
+        {
+            "tile": 43,
+            "items": [
+                {
+                    "key": "Pogo Stick",
+                    "value": 1
+                }
+            ]
+        },
+        {
+            "tile": 63,
+            "items": [
+                {
+                    "key": "Pogo Stick",
+                    "value": 1
+                }
+            ]
+        },
+        {
+            "tile": 55,
+            "items": [
+                {
+                    "key": "Pogo Stick",
+                    "value": 2
+                }
+            ]
+        },
+        {
+            "tile": 57,
+            "items": [
+                {
+                    "key": "Pogo Stick",
+                    "value": 1
+                }
+            ]
+        },
+        {
+            "tile": 52,
+            "items": [
+                {
+                    "key": "Pogo Stick",
+                    "value": 1
+                }
+            ]
+        },
+        {
+            "tile": 72,
+            "items": [
+                {
+                    "key": "Pogo Stick",
+                    "value": 1
+                }
+            ]
+        },
+        {
+            "tile": 45,
+            "items": [
+                {
+                    "key": "Pogo Stick",
+                    "value": 1
+                }
+            ]
+        },
+        {
+            "tile": 62,
+            "items": [
+                {
+                    "key": "Pogo Stick",
+                    "value": 3
+                },
+                {
+                    "key": "Anti Snake Spray",
+                    "value": 1
+                }
+            ]
+        },
+        {
+            "tile": 80,
+            "items": [
+                {
+                    "key": "Pogo Stick",
+                    "value": 1
+                }
+            ]
+        },
+        {
+            "tile": 69,
+            "items": [
+                {
+                    "key": "Pogo Stick",
+                    "value": 1
+                }
+            ]
+        },
+        {
+            "tile": 71,
+            "items": [
+                {
+                    "key": "Pogo Stick",
+                    "value": 1
+                }
+            ]
+        },
+        {
+            "tile": 88,
+            "items": [
+                {
+                    "key": "Pogo Stick",
+                    "value": 1
+                }
+            ]
+        },
+        {
+            "tile": 79,
+            "items": [
+                {
+                    "key": "Pogo Stick",
+                    "value": 1
+                }
+            ]
+        },
+        {
+            "tile": 96,
+            "items": [
+                {
+                    "key": "Pogo Stick",
+                    "value": 1
+                }
+            ]
+        }
+    ],
+    "roundItemPurchasesList": [
+        {
+            "round": 1,
+            "items": [
+                {
+                    "key": "Pogo Stick",
+                    "value": 142
+                },
+                {
+                    "key": "Bomb",
+                    "value": 8
+                },
+                {
+                    "key": "Stun Gun",
+                    "value": 10
+                },
+                {
+                    "key": "Anti Snake Spray",
+                    "value": 2
+                },
+                {
+                    "key": "Points Multiplier",
+                    "value": 7
+                }
+            ]
+        },
+        {
+            "round": 2,
+            "items": [
+                {
+                    "key": "Shield",
+                    "value": 2
+                },
+                {
+                    "key": "Bomb",
+                    "value": 4
+                },
+                {
+                    "key": "Pogo Stick",
+                    "value": 23
+                },
+                {
+                    "key": "Points Multiplier",
+                    "value": 1
+                },
+                {
+                    "key": "Stun Gun",
+                    "value": 2
+                }
+            ]
+        },
+        {
+            "round": 3,
+            "items": [
+                {
+                    "key": "Pogo Stick",
+                    "value": 5
+                },
+                {
+                    "key": "Stun Gun",
+                    "value": 2
+                }
+            ]
+        },
+        {
+            "round": 4,
+            "items": [
+                {
+                    "key": "Shield",
+                    "value": 1
+                },
+                {
+                    "key": "Anti Snake Spray",
+                    "value": 1
+                },
+                {
+                    "key": "Pogo Stick",
+                    "value": 3
+                }
+            ]
+        },
+        {
+            "round": 5,
+            "items": [
+                {
+                    "key": "Pogo Stick",
+                    "value": 3
+                }
+            ]
+        },
+        {
+            "round": 6,
+            "items": [
+                {
+                    "key": "Pogo Stick",
+                    "value": 4
+                }
+            ]
+        },
+        {
+            "round": 7,
+            "items": [
+                {
+                    "key": "Pogo Stick",
+                    "value": 4
+                }
+            ]
+        },
+        {
+            "round": 8,
+            "items": [
+                {
+                    "key": "Pogo Stick",
+                    "value": 4
+                }
+            ]
+        },
+        {
+            "round": 9,
+            "items": [
+                {
+                    "key": "Pogo Stick",
+                    "value": 4
+                }
+            ]
+        },
+        {
+            "round": 10,
+            "items": [
+                {
+                    "key": "Pogo Stick",
+                    "value": 4
+                }
+            ]
+        },
+        {
+            "round": 11,
+            "items": [
+                {
+                    "key": "Pogo Stick",
+                    "value": 4
+                }
+            ]
+        }
+    ],
+    "itemHitEvents": [
+        {
+            "itemName": "Bomb",
+            "tile": 34,
+            "playerPlace": 1
+        },
+        {
+            "itemName": "Stun Gun",
+            "tile": 34,
+            "playerPlace": 1
+        },
+        {
+            "itemName": "Stun Gun",
+            "tile": 11,
+            "playerPlace": 2
+        },
+        {
+            "itemName": "Stun Gun",
+            "tile": 5,
+            "playerPlace": 3
+        },
+        {
+            "itemName": "Stun Gun",
+            "tile": 5,
+            "playerPlace": 3
+        },
+        {
+            "itemName": "Stun Gun",
+            "tile": 3,
+            "playerPlace": 3
+        },
+        {
+            "itemName": "Stun Gun",
+            "tile": 3,
+            "playerPlace": 3
+        },
+        {
+            "itemName": "Stun Gun",
+            "tile": 3,
+            "playerPlace": 4
+        },
+        {
+            "itemName": "Bomb",
+            "tile": 3,
+            "playerPlace": 3
+        },
+        {
+            "itemName": "Bomb",
+            "tile": 3,
+            "playerPlace": 3
+        },
+        {
+            "itemName": "Stun Gun",
+            "tile": 35,
+            "playerPlace": 1
+        }
+    ]
+}

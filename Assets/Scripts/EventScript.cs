@@ -3,15 +3,23 @@ using System.Collections;
 
 public class EventScript : MonoBehaviour
 {
+    public static EventScript instance;
     public ShopManager shopManager;
     public int roundCount = 0;
+    public int currentRound;
     public State currentState = State.Normal;
     public GameManager gameManager;
     public GameManager_Bots gameManagerBots;
 
+    private void Awake()
+    {
+        instance = this;
+    }
+
     public void OnNewRound()
     {
         roundCount++;
+        currentRound++;
         Debug.Log($"🌀 New Round Started! (Round {roundCount})");
 
         StartCoroutine(WaitForPlayerToFinishAndStartShop());

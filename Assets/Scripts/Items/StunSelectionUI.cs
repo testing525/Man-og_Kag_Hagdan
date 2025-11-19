@@ -63,8 +63,13 @@ public class StunSelectionUI : MonoBehaviour
         // 🥊 Apply stun normally
         if (gameManager != null)
             gameManager.playerStates.SetStunned(target);
-        else if (gameManagerBots != null)
+        else if (gameManagerBots != null) 
+        {
             gameManagerBots.playerStates.SetStunned(target);
+            gameManagerBots.ProceedToNextPlayer();
+        }
+
+        LearningManager.Instance.RecordItemHit(target, "Stun Gun");
 
         // ⏭ Skip immediately if it’s the current player's turn
         bool isTargetCurrentPlayer = false;
@@ -76,10 +81,18 @@ public class StunSelectionUI : MonoBehaviour
         if (isTargetCurrentPlayer)
         {
             Debug.Log("⏭ Immediately skipping stunned player's current turn...");
-            if (gameManager != null)
+            if (gameManager != null) 
+            {
+                EventScript.instance.currentState = State.Normal;
                 gameManager.ProceedToNextPlayer();
-            else if (gameManagerBots != null)
+            }  
+            else if (gameManagerBots != null) 
+            {
+                EventScript.instance.currentState = State.Normal;
                 gameManagerBots.ProceedToNextPlayer();
+
+            }
+                
         }
 
         // Reset state
